@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>登录</title>
+    <link rel="stylesheet" th:href="@{/css/weui.css}">
+    <link rel="stylesheet" th:href="@{/css/weuix.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-2.1.0.js}"></script>
+    <script type="text/javascript" th:src="@{/js/zepto.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/zepto.weui.js}"></script>
+
+    <link rel="stylesheet" th:href="@{../user/css/layui.css}">
+    <link rel="stylesheet" th:href="@{../user/css/style.css}">
+    <link rel="stylesheet" th:href="@{../user/css/modules/layer/default/layer.css}">
+    <script th:src="@{../user/js/layui.js}"></script>
+
+</head>
+<body>
+<!--标题栏-->
+<div class="weui-header bg-success">
+    <div class="weui-header-left"> <a class="f-white" href="/index.do">首页</a>  </div>
+    <h1 class="weui-header-title">美妆商城</h1>
+    <div class="weui-header-right"><a class="f-white" href="/regist">注册</a></div>
+</div>
+<div class="login-main">
+    <header class="layui-elip">美妆商城登录</header>
+    <form class="layui-form" action="${APP_PATH}/library/list.action" method="post">
+        <div class="layui-input-inline">
+            <input type="text" name="user_name" required lay-verify="required" placeholder="用户名" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <input type="password" name="user_password" required lay-verify="required" placeholder="密码" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline login-btn">
+            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
+        </div>
+        <hr/>
+        <p><a href="/regist" class="fl">立即注册</a></p>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    layui.use(['form','layer','jquery'], function () {
+
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+
+        form.on('submit(login)',function (data) {
+            $.ajax({
+                url:'/user/login.do',
+                data:data.field,
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+
+                    if (data.code == 1) {
+                        //跳转到查询结果界面
+                        $.toast("登录成功!",1000);
+                        window.location.href='/index';
+                    }else {
+                        $.alert("账号或用户名错误!");
+                    }
+                }
+            })
+            return false;
+        })
+    });
+
+</script>
+
+</body>
+</html>

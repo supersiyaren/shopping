@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzq.dragonshopping.mapper.UserMapper">
+    <!--登录查询-->
+    <select id="selectByUnamePwdType" parameterType="UserEntity" resultType="UserEntity">
+        select * from  `user`
+        WHERE user_name=#{user_name} and user_password=#{user_password}
+    </select>
+    <!--注册-->
+    <insert id="insertUser" parameterType="UserEntity">
+        INSERT INTO `user`
+         VALUES
+         (
+            #{user_id},
+            #{user_name},
+            #{user_sex},
+            #{user_password},
+            #{user_address},
+            #{user_phone},
+            #{user_headimgurl},
+            #{user_status},
+            #{user_type},
+            #{user_money},
+            #{user_email},
+            #{user_uname}
+          )
+    </insert>
+    <!--查询余额是否够用-->
+    <select id="selectComparedUserBalanceById" parameterType="UserEntity" resultType="UserEntity">
+        SELECT user_id,user_money FROM `user` where user_money &gt;= #{user_money} and user_id = #{user_id}
+    </select>
+
+    <select id="selectById" parameterType="int" resultType="string">
+        SELECT user_name  FROM `user` where user_id = #{id}
+    </select>
+
+    <select id="selectEmailById" parameterType="int" resultType="string">
+        SELECT user_email  FROM `user` where user_id = #{id}
+    </select>
+
+    <select id="selectUserById" parameterType="int" resultType="UserEntity">
+        SELECT *  FROM `user` where user_id = #{user_id}
+    </select>
+
+    <select id="checkUser" parameterType="string" resultType="UserEntity">
+        SELECT *  FROM `user` where user_name = #{user_name}
+    </select>
+
+    <!--更新用户余额-->
+    <update id="updateUserMoneyByUid" parameterType="UserEntity">
+        UPDATE
+          `user`
+        SET
+          user_money = #{user_money}
+        WHERE
+          user_id= #{user_id}
+    </update>
+
+    <update id="setPassword" parameterType="UserEntity">
+        UPDATE
+          `user`
+        SET
+          user_password = #{user_password}
+        WHERE
+          user_id= #{user_id}
+    </update>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzq.dragonshopping.mapper.OrderMapper">
+
+    <select id="selectAll" parameterType="int" resultType="OrderEntity">
+        select id,user_id as userId,produce_id as produceId,pay_state as payState, order_num as orderNum,pay_time as payTime,total_price as totalPrice
+        from order_details where user_id = #{userId}
+    </select>
+
+    <select id="selectTotal" parameterType="int" resultType="OrderEntity">
+        select id,user_id as userId,produce_id as produceId,pay_state as payState, order_num as orderNum,pay_time as payTime,total_price as totalPrice
+        from order_details
+    </select>
+
+    <select id="selectById" parameterType="int" resultType="OrderEntity">
+        select id,user_id as userId,produce_id as produceId,pay_state as payState, order_num as orderNum,pay_time as payTime,total_price as totalPrice
+        from order_details where id = #{id}
+    </select>
+
+    <update id="updateState" parameterType="int">
+        update order_details set pay_state = 2 where id = #{id}
+    </update>
+
+    <resultMap id="orderMap" type="com.hzq.dragonshopping.entity.OrderEntity">
+        <id property="id" jdbcType="INTEGER" column="id"/>
+        <result property="userId" jdbcType="INTEGER" column="user_id"/>
+        <result property="produceId" jdbcType="VARCHAR" column="produce_id"/>
+        <result property="payState" jdbcType="INTEGER" column="pay_state"/>
+        <result property="orderNum" jdbcType="INTEGER" column="order_num"/>
+        <result property="payTime" jdbcType="DATE" column="pay_time"/>
+        <result property="totalPrice" jdbcType="DOUBLE" column="total_price"/>
+    </resultMap>
+    <!--查询所有商品详情-->
+    <select id="findTotalPriceByDay" parameterType="int" resultType="double">
+        select sum(total_price) from order_details where date(pay_time) = date_sub(curdate(),interval #{i} day);
+    </select>
+
+    <select id="findTotalNumByDay" parameterType="int" resultType="int">
+        select sum(order_num) from order_details where date(pay_time) = date_sub(curdate(),interval #{i} day);
+    </select>
+
+    <insert id="insert" parameterType="OrderEntity" >
+        insert into order_details(user_id,produce_id,pay_state,order_num,pay_time,total_price)
+        values(#{userId},#{produceId},#{payState},#{orderNum},#{payTime},#{totalPrice})
+    </insert>
+
+</mapper>

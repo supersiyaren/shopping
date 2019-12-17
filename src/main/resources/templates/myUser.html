@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>注册</title>
+    <link rel="stylesheet" th:href="@{/css/weui.css}">
+    <link rel="stylesheet" th:href="@{/css/weuix.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-2.1.0.js}"></script>
+    <script type="text/javascript" th:src="@{/js/zepto.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/zepto.weui.js}"></script>
+
+    <link rel="stylesheet" th:href="@{../user/css/layui.css}">
+    <link rel="stylesheet" th:href="@{../user/css/style.css}">
+    <link rel="stylesheet" th:href="@{../user/css/modules/layer/default/layer.css}">
+    <script th:src="@{../user/js/laydate.js}"></script>
+    <script th:src="@{../user/js/layui.js}"></script>
+    <style type="text/css">
+        .top{
+            margin-top: 25%
+        }
+        .iconleft{
+            margin-left: 10%;
+        }
+    </style>
+</head>
+<body>
+<div class="login-main">
+    <header class="layui-elip" style="width: 82%;;margin-top:40px">个人信息</header>
+    <!-- 表单选项 -->
+    <form class="layui-form">
+        <div class="layui-input-inline">
+            账号:
+            <div class="layui-inline" style="width: 85%">
+                <input type="text" id="user" name="user_name" required th:value="${user.user_name}"  disabled lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            电话:
+            <div class="layui-inline" style="width: 85%">
+                <input type="text" name="user_phone" th:value="${user.user_phone}"  disabled required lay-verify="required" placeholder="电话" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            姓名:
+            <div class="layui-inline" style="width: 85%">
+                <input type="text" name="user_uname" th:value="${user.user_uname}"  disabled required lay-verify="required" placeholder="姓名" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+<!--        <div class="layui-input-inline">-->
+<!--            地址:-->
+<!--            <div class="layui-inline" style="width: 85%">-->
+<!--                <input type="text" name="user_address" th:value="${user.user_address}"  disabled required lay-verify="required" placeholder="地址" autocomplete="off"-->
+<!--                       class="layui-input">-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="layui-input-inline">
+            邮箱:
+            <div class="layui-inline" style="width: 85%">
+                <input type="text" name="user_email" th:value="${user.user_email}"  disabled  lay-verify="required" placeholder="QQ邮箱" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-inline login-btn" style="width: 85%">
+            <button type="button" id="alterPwd" class="layui-btn layui-btn-normal">修改密码</button>
+        </div>
+        <div class="layui-input-inline login-btn" style="width: 85%">
+            <button type="button" id="goBack" class="layui-btn">返回</button>
+        </div>
+    </form>
+</div>
+
+
+
+<script type="text/javascript">
+    layui.use(['form','jquery','layer'], function () {
+        var form   = layui.form;
+        var $      = layui.jquery;
+        var layer  = layui.layer;
+
+        $("#goBack").click(function () {
+            window.location.href = "/user/center.do"
+        })
+
+        $("#alterPwd").click(function () {
+            layer.open({
+                type: 2,
+                title: '修改密码',
+                skin: 'layui-layer-demo', //加上边框
+                area: ['500px', '300px'], //宽高
+                content: '/user/alterPwd.do?'
+            });
+        })
+
+
+    });
+</script>
+
+</body>
+</html>

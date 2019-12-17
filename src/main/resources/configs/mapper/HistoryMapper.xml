@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzq.dragonshopping.mapper.HistoryMapper">
+
+    <select id="selectAll" parameterType="int" resultType="History">
+        select id,title,price,user_id as userId,create_time as createTime
+        from history
+    </select>
+
+    <insert id="add" parameterType="History" >
+        insert into history(title,price,user_id,create_time)
+        values (#{title},#{price},#{userId},#{createTime})
+    </insert>
+</mapper>
